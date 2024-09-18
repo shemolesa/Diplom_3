@@ -50,6 +50,5 @@ class RecoveryPage(BasePage):
     def show_password(self):
         self.entering_new_password()  # вводим пароль
         self.click_to_element_exception(RecoveryPageLocators.BUTTON_SHOW_PASSWORD, MainPageLocators.EXCEPTION)
-        #self.click_to_element(RecoveryPageLocators.BUTTON_SHOW_PASSWORD) #нажимаем кнопку отображения пароля
         # получаем значение атрибута 'class' и передаем
         return self.getting_element_attribute(RecoveryPageLocators.BUTTON_SHOW_PASSWORD, 'class')

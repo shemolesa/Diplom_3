@@ -15,5 +15,4 @@ class AccountPageLocators:
     TAB_ORDER_HISTORY = By.XPATH, './/a[text()="История заказов"]' # вкладка "История заказов"
     CONTAINER_HISTORY_ORDERS = By.XPATH, './/div[contains(@class, "Account_contentBox")]' # контейнер истории заказов
     LIST_ORDERS = By.XPATH, './/li[contains(@class, "OrderHistory_listItem")]' # заказ в истории заказов
-#    BUTTON_SAVE_PROFILE = By.XPATH, './/button[contains(@class, "button_button_type_primary") and text()="Сохранить"]'
     OVERLAY = By.XPATH, '//*[@class="Modal_modal_overlay__x2ZCr"]' # локатор невидимого модального окна

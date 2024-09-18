@@ -12,7 +12,6 @@ class MainPageLocators:
     FIELD_PASSWORD = (By.XPATH, ".//*[text()='Пароль']/following-sibling::input")   # поле ввода пароля
     BUTTON_SHOW_PASSWORD = By.XPATH, './/div[contains(@class, "input_type_password")]' #кнопка показать пароль
     BUTTON_HIDE_PASSWORD = By.XPATH, './/div[contains(@class, "input_type_text")]' #кнопка скрыть пароль
-#    BUTTON = By.XPATH, './/div[contains(@class, "input_type_password")]//*[name()="svg"]'
     INSCRIPTION_INGREDIENT_DETAILS = By.XPATH, '.// h2[text() = "Детали ингредиента"]' #
     MENU_BUNS = By.XPATH, '//a[@href="/ingredient/61c0c5a71d1f82001bdaaa6d"]' # булка из меню
     COUNTER_BUN = By.XPATH, '//a[@href="/ingredient/61c0c5a71d1f82001bdaaa6d"]//p[@class="counter_counter__num__3nue1"]' # каунтер булки в меню
@@ -28,10 +27,7 @@ class MainPageLocators:
     CONSTRUCTOR = By.XPATH, './/ul[contains(@class, "BurgerConstructor_basket__list")]'
     BUTTON_CHECKOUT = By.XPATH, '.// button[text() = "Оформить заказ"]' # кнопка "Оформить заказ"
     NUMBER_ORDER = By.XPATH, './/h2[contains(@class, "Modal_modal__title_shadow")]' #номер заказа
- #   './/button[contains(@class, "Modal_modal__close")]//*[name()="svg"]'
     BUTTON_ORDER_FEED = By.XPATH, './/p[text()="Лента Заказов"]' # кнопка "Лента Заказов"
     INSCRIPTION_ORDER_FEED = By.XPATH, './/div[contains(@class,"OrderFeed_orderFeed__2RO")]//h1[text()="Лента заказов"]' # заголовок в ленте заказов
-    #BUTTON_CLOSE_ORDER = By.XPATH, './/button[contains(@class,"Modal_modal__close_modified")]//*[name()="svg"]' # кнопка закрытия окна с номером заказа
-    #BUTTON_CLOSE_ORDER = By.XPATH, './/button[contains(@class, "Modal_modal__close__TnseK")]//*[name()="svg"]'
     BUTTON_CLOSE_ORDER = By.XPATH, '//*[contains(@class, "Modal_modal__close")]'
 

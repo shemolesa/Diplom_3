@@ -30,13 +30,6 @@ class MainPage(BasePage):
         self.drag_and_drop_ingredient(locators[0], MainPageLocators.CONSTRUCTOR)
         return self.get_text_from_element(locators[1]) # получаем значение каунтера и передаем
 
-    # @allure.step('Оформление заказа')
-    # def registration_order(self):
-    #     self.order_formation() # формируем бургер
-    #     self.click_to_element(MainPageLocators.BUTTON_CHECKOUT) # нажимаем кнопку оформления заказа
-    #     self.waiting_for_text_to_change(MainPageLocators.NUMBER_ORDER, '9999') # ждем получения номера заказа
-    #     return self.get_text_from_element(MainPageLocators.NUMBER_ORDER) # получаем номер заказа и передаем
-
     @allure.step('Формирование заказа')
     def order_formation(self):
         locator = formation_locators(data.MENU_BUNS) # формирование локатора булки
@@ -49,7 +42,6 @@ class MainPage(BasePage):
         number = self.get_text_from_element(MainPageLocators.NUMBER_ORDER)  # считываем отображаемый номер заказа
         # ждем получения номера заказа и передаем
         self.waiting_for_text_to_change(MainPageLocators.NUMBER_ORDER, number)
-
 
     @allure.step('Получение номера оформленного заказа')
     def getting_order_counter(self):

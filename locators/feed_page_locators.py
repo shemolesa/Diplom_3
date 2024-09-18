@@ -7,7 +7,6 @@ class FeedPageLocators:
     LAST_ORDER_CARD = By.XPATH, './/*[contains(@class, "OrderFeed_contentBox")]/ul/li[last()]' # последний заказ в ленте
     MODAL_WINDOW = By.XPATH, '//section[contains(@class, "Modal_modal_opened__3ISw4")]' # окно просмотра деталей заказа
     LIST_ORDER_CARDS = By.XPATH, './/*[contains(@class, "OrderFeed_contentBox")]/ul/li' #
-#    M_W = By.XPATH, './/section[contains(@class, "Modal_modal__P3_V5")]' # окно просмотра деталей ингредиента
     ORDER_AT_WORK = By.XPATH, '//ul[contains(@class, "OrderFeed_orderListReady")]//li[text()="{}"]' # элемент списка "В работе"
     ORDERS_READY = By.XPATH, '//ul[contains(@class, "OrderFeed_orderListReady")]//li' # список "В работе"
     NUMBER_ORDER_HISTORY = By.XPATH, './/div[contains(@class, "OrderHistory_textBox")]//p[contains(@class, "text_type_digits-default")]' #номер заказа в истории
