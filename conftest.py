@@ -26,10 +26,18 @@ def response_customer(account_page):
     account_page.login_customer(payload)
     yield response_customer, access_token, payload
      #удаляем тестового покупателя
-    response_delete = requests.delete(URL_CUSTOMER, headers={'Authorization': access_token})
+    requests.delete(URL_CUSTOMER, headers={'Authorization': access_token})
+
+@allure.step('Регистрация нового тестового покупателя, авторизация, формирование заказов и последующее удаление')
+@pytest.fixture()
+def customer_authorized(response_customer, account_page, main_page):
+    # формируем заказ
+    main_page.registration_order()
+    return response_customer[0], response_customer[1], response_customer[2]
+
 
 @allure.step('Инициация драйвера  и последующее удаление')
-@pytest.fixture(params=['chrome'])  #инициация вебдрайвера (params=['chrome', 'firefox'])
+@pytest.fixture(params=['chrome', 'firefox']) #инициация вебдрайвера
 def driver(request):
     if request.param == 'chrome':
         chrome_options = ChromeOptions()
@@ -66,19 +74,4 @@ def account_page(driver):
 def feed_page(driver):
     feed_page = FeedPage(driver)
     return feed_page
-
-@allure.step('Регистрация нового тестового покупателя, авторизация, формирование заказов и последующее удаление')
-@pytest.fixture()
-def customer_authorized(account_page, main_page):
-    # генерируем данные покупателя
-    payload = generate_data_customer()
-    # отправляем запрос на регистрацию тестового покупателя и сохраняем ответ в переменную
-    response = requests.post(URL_CUSTOMER_REG, data=payload)
-    # получаем токен пользователя
-    access_token = response.json()['accessToken']
-    account_page.login_customer(payload)
-    main_page.registration_order()
-    yield customer_authorized, access_token, payload
-    #удаляем тестового покупателя
-    response_delete = requests.delete(URL_CUSTOMER, headers={'Authorization': access_token})
 
