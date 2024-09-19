@@ -1,6 +1,5 @@
 import allure
 import data
-from locators.account_page_locators import AccountPageLocators
 from pages.base_page import BasePage
 from locators.main_page_locators import MainPageLocators
 from helpers import formation_locators
@@ -40,33 +39,31 @@ class MainPage(BasePage):
         self.adding_ingredient(locator, '1') # добавление начинки в конструктор
         self.click_to_element(MainPageLocators.BUTTON_CHECKOUT) # нажимаем кнопку оформления заказа
         number = self.get_text_from_element(MainPageLocators.NUMBER_ORDER)  # считываем отображаемый номер заказа
-        # ждем получения номера заказа и передаем
+        # ждем получения номера заказа
         self.waiting_for_text_to_change(MainPageLocators.NUMBER_ORDER, number)
 
     @allure.step('Получение номера оформленного заказа')
     def getting_order_counter(self):
-        self.order_formation()
         return self.get_text_from_element(MainPageLocators.NUMBER_ORDER)
+
+    @allure.step('Закрытие окна заказа')
+    def close_order_window(self):
+        self.click_to_element(MainPageLocators.BUTTON_CLOSE_ORDER)
+
+    @allure.step('Оформление заказа с получением номера')
+    def registration_order_with_number(self):
+        self.order_formation() # формируем заказ
+        number = self.getting_order_counter() # получаем номер заказа
+        self.close_order_window() # закрываем окно
+        return number # передаем номер заказа
 
     @allure.step('Оформление заказа')
     def registration_order(self):
-        self.order_formation()
-        #self.click_to_element(MainPageLocators.BUTTON_CLOSE)
-        self.close_order_window(MainPageLocators.BUTTON_CLOSE_ORDER, MainPageLocators.EXCEPTION)
+        self.order_formation() # формируем заказ
+        self.close_order_window() # закрываем окно
 
-    @allure.step('Переход по кнопке "Лента Заказов"')
-    def transition_order_feed(self):
-        # переходим в ленту
-        return self.transition_to_page_exception(MainPageLocators.BUTTON_ORDER_FEED,
-                                                  MainPageLocators.INSCRIPTION_ORDER_FEED, MainPageLocators.EXCEPTION)
+    @allure.step('Поиск надписи Соберите бургер')
+    def search_inscription_constructor(self):
+        return self.find_element_with_wait(MainPageLocators.INSCRIPTION_ASSEMBLE_BURGER)
 
 
-    @allure.step('Переход по кнопке "Конструктор"')
-    def transition_constructor(self):
-        # переходим в профиль
-        self.transition_to_page_exception(AccountPageLocators.BUTTON_PERSONAL_ACCOUNT,
-                                          AccountPageLocators.TAB_PROFILE, MainPageLocators.EXCEPTION)
-        # переходим в конструктор
-        return self.transition_to_page_exception(MainPageLocators.BUTTON_CONSTRUCTOR,
-                                                 MainPageLocators.INSCRIPTION_ASSEMBLE_BURGER,
-                                                 MainPageLocators.EXCEPTION)

@@ -1,7 +1,6 @@
 import allure
 from pages.base_page import BasePage
 from locators.account_page_locators import AccountPageLocators
-from locators.main_page_locators import MainPageLocators
 
 
 class AccountPage(BasePage):
@@ -9,8 +8,6 @@ class AccountPage(BasePage):
 
     @allure.step('Авторизация пользователя')
     def login_customer(self, data_customer):
-        # переход на страницу авторизации
-        self.click_to_element(AccountPageLocators.BUTTON_PERSONAL_ACCOUNT)
         # ввод емэйла
         self.add_text_to_element(AccountPageLocators.FIELD_EMAIL, data_customer['email'])
         # ввод пароля
@@ -18,33 +15,23 @@ class AccountPage(BasePage):
         # нажатие кнопки входа
         self.click_to_element(AccountPageLocators.BUTTON_ENTRANCE)
 
-    @allure.step('Переход в личный кабинет с авторизацией')
-    def login_to_personal_account_authorized(self, data_customer):
-        # переход в личный кабинет под авторизованным пользователем и передача результата
-        return self.transition_to_page_exception(AccountPageLocators.BUTTON_PERSONAL_ACCOUNT,
-                                          AccountPageLocators.TAB_PROFILE, MainPageLocators.EXCEPTION)
+    @allure.step('Поиск таба Профиль')
+    def search_for_profile_tab(self):
+        # ищем таб Профиль и передаем результата
+        return self.find_element_with_wait(AccountPageLocators.TAB_PROFILE)
 
-    @allure.step('Переход в личный кабинет без авторизации')
-    def login_to_personal_account_unauthorized(self):
-        # переход в личный кабинет без авторизации и передача результата
-        return self.transition_to_page_exception(AccountPageLocators.BUTTON_PERSONAL_ACCOUNT,
-                                                 AccountPageLocators.INSCRIPTION_ENTRANCE, MainPageLocators.EXCEPTION)
+    @allure.step('Поиск надписи Вход')
+    def search_inscription_entrance(self):
+        # ищем надпись Вход и передаем результат
+        return self.find_element_with_wait(AccountPageLocators.INSCRIPTION_ENTRANCE)
 
-    @allure.step('Выход из аккаунта')
-    def logout_from_account(self, data_customer):
-        # переход в личный кабинет под авторизованным пользователем
-        self.transition_to_page_exception(AccountPageLocators.BUTTON_PERSONAL_ACCOUNT,
-                                          AccountPageLocators.TAB_PROFILE, MainPageLocators.EXCEPTION)
-        # выход из ЛК и передача результата
-        return self.transition_to_page_exception(AccountPageLocators.TAB_EXIT,
-                                                 AccountPageLocators.INSCRIPTION_ENTRANCE, MainPageLocators.EXCEPTION)
+    @allure.step('Поиск контейнера истории')
+    def search_order_history(self):
+        # ищем контейнер истории и передаем результат
+        return self.find_element_with_wait(AccountPageLocators.CONTAINER_HISTORY_ORDERS)
 
-    @allure.step('Переход в раздел "История заказов"')
-    def transition_order_history(self):
-        # переход в личный кабинет под авторизованным пользователем
-        self.transition_to_page_exception(AccountPageLocators.BUTTON_PERSONAL_ACCOUNT,
-                                          AccountPageLocators.TAB_PROFILE, MainPageLocators.EXCEPTION)
-        # переход в Историю и передача результата
-        return self.transition_to_page_exception(AccountPageLocators.TAB_ORDER_HISTORY,
-                                                 AccountPageLocators.CONTAINER_HISTORY_ORDERS,
-                                                 MainPageLocators.EXCEPTION)
+    @allure.step('Получение номера заказа в истории')
+    def getting_orders_in_history(self):
+        # получаем номера заказа из истории и передаем
+        return self.get_text_from_element(AccountPageLocators.NUMBER_ORDER_HISTORY)
+

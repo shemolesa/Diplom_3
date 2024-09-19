@@ -8,6 +8,4 @@ class RecoveryPageLocators:
     BUTTON_SAVE = By.XPATH, '.// button[text() = "Сохранить"]' #кнопка "Сохранить" на странице восстановления пароля
     INPUT_PASSWORD = (By.XPATH, ".//*[text()='Пароль']/following-sibling::input")   # поле ввода пароля
     BUTTON_SHOW_PASSWORD = (By.XPATH, '//label[text()="Пароль"]//parent::div')   # поле ввода пароля
-    BUTTON_HIDE_PASSWORD = By.XPATH, './/div[contains(@class, "input_type_text")]' #кнопка скрыть пароль
-    BUTTON = By.XPATH, './/div[contains(@class, "input_type_password")]//*[name()="svg"]'
-    INSCRIPTION_ENTRANCE = By.XPATH, '.// h2[text() = "Вход"]'  # надпись "Вход" на странице входа
+    BUTTON_EYE = By.XPATH, './/div[contains(@class, "input_type_password")]//*[name()="svg"]'

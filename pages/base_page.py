@@ -1,5 +1,5 @@
 import allure
-from selenium.common import ElementClickInterceptedException, TimeoutException
+from selenium.common import ElementClickInterceptedException
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.common.action_chains import ActionChains
@@ -23,6 +23,16 @@ class BasePage:
     @allure.step('поиск элемента с нажатием на него')
     def click_to_element(self, locator):
         self.find_element_with_wait(locator).click()
+
+    @allure.step('поиск элемента с ожиданием кликабельности и нажатием на него')
+    def click_element_with_wait_clickable(self, locator):
+        while True:
+            try:
+                self.click_to_element(locator)
+                break
+            except ElementClickInterceptedException:
+                WebDriverWait(self.driver, PAUSE).until(expected_conditions.element_to_be_clickable(locator))
+                continue
 
     @allure.step('Поиск элемента и ввод текста в поле')
     def add_text_to_element(self, locator, text):
@@ -61,37 +71,9 @@ class BasePage:
                     continue
                 continue
 
-    @allure.step("Закрытие окна с заказом")
-    def close_order_window(self, element, locator_exception):
-        while True:
-            try:
-                self.click_to_element(element)
-                break
-            except ElementClickInterceptedException:
-                try:
-                    WebDriverWait(self.driver, PAUSE).until_not(
-                        expected_conditions.visibility_of_element_located(locator_exception))
-                except TimeoutException:
-                    continue
-                continue
-
-    @allure.step('Переход по кнопке на другую страницу')
-    def transition_to_page_exception(self, button, element, locator_exception):
-        self.click_to_element_exception(button, locator_exception)
-        return self.find_element_with_wait(element)
-
     @allure.step('Перетаскивание ингредиента')
     def drag_and_drop_ingredient(self, locator_element, locator_target):
         element = self.find_element_with_wait(locator_element)
         target = self.find_element_with_wait(locator_target)
         ActionChains(self.driver).drag_and_drop(element, target).perform()
-
-    @allure.step('Формирование бургера')
-    def formation_burger(self, burger):
-        self.drag_and_drop_ingredient(burger[0], burger[3])
-        self.scroll_to_element(burger[1])
-        self.drag_and_drop_ingredient(burger[1], burger[3])
-        self.scroll_to_element(burger[2])
-        self.drag_and_drop_ingredient(burger[2], burger[3])
-        self.click_to_element(burger[4])
 
